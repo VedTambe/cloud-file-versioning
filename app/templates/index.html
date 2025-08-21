@@ -1,24 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Cloud File Versioning </title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cloud File Versioning</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9fafb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+            letter-spacing: 1.2px;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        input[type="file"] {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 6px;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        li {
+            background: #f1f5f9;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.05rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .actions {
+            display: flex;
+            gap: 15px;
+        }
+        a.button-link {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        a.button-link:hover {
+            background-color: #1e7e34;
+        }
+        a.history-link {
+            background-color: #17a2b8;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        a.history-link:hover {
+            background-color: #117a8b;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Cloud File Versioning</h1>
         <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>
+            <input type="file" name="file" required />
             <button type="submit">Upload</button>
         </form>
+
         <h2>Uploaded Files</h2>
         <ul>
             {% for file in files %}
-                <li>{{ file[1] }} (v{{ file[2] }}) 
-                    <a href="/history/{{ file[1] }}">View History</a>
+                <li>
+                    {{ file[1] }} (v{{ file[2] }})
+                    <div class="actions">
+                        <a class="button-link" href="{{ url_for('preview', filename=file[1]) }}" target="_blank">View</a>
+                        <a class="history-link" href="{{ url_for('history', filename=file[1]) }}">View History</a>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
     </div>
 </body>
 </html>
+
