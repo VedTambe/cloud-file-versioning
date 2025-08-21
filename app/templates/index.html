@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cloud File Versioning </title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cloud File Versioning</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit">Upload</button>
+        </form>
+        <h2>Uploaded Files</h2>
+        <ul>
+            {% for file in files %}
+                <li>{{ file[1] }} (v{{ file[2] }}) 
+                    <a href="/history/{{ file[1] }}">View History</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
